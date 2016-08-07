@@ -9,11 +9,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
+var user_service_1 = require("../services/user.service");
+var router_1 = require("@angular/router");
 var AppChat = (function () {
-    function AppChat() {
+    function AppChat(appUser, route) {
+        this.appUser = appUser;
+        this.route = route;
         this.newMessage = "";
         this.messages = ["hello", "you"];
     }
+    AppChat.prototype.ngOnInit = function () {
+        if (!this.appUser.getUser().isLogin) {
+            this.route.navigate(["/login"]);
+        }
+    };
     AppChat.prototype.addNewMessage = function (message) {
         this.messages.push(message);
         this.newMessage = "";
@@ -21,9 +30,10 @@ var AppChat = (function () {
     AppChat = __decorate([
         core_1.Component({
             selector: "app-chat",
-            template: "\n    <input #messageInput type=\"text\" [(ngModel)]=\"newMessage\"><br>\n    <button type=\"button\" (click)=\"addNewMessage(messageInput.value)\">Send new message</button>\n    <ul>\n      <li *ngFor=\"let message of messages\">{{message}}</li>\n    </ul>\n  "
+            template: "\n    <input #messageInput type=\"text\" [(ngModel)]=\"newMessage\"><br>\n    <button type=\"button\" (click)=\"addNewMessage(messageInput.value)\">Send new message</button>\n    <ul>\n      <li *ngFor=\"let message of messages\">{{message}}</li>\n    </ul>\n  ",
+            providers: [user_service_1.AppUser]
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [user_service_1.AppUser, router_1.Router])
     ], AppChat);
     return AppChat;
 }());
