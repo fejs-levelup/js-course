@@ -19,9 +19,13 @@ var AppChat = (function () {
         this.messages = ["hello", "you"];
     }
     AppChat.prototype.ngOnInit = function () {
-        if (!this.appUser.getUser().isLogin) {
+        if (this.appUser.getUser().isLogin === false) {
             this.route.navigate(["/login"]);
         }
+    };
+    AppChat.prototype.logout = function () {
+        this.appUser.logout();
+        this.route.navigate(["/login"]);
     };
     AppChat.prototype.addNewMessage = function (message) {
         this.messages.push(message);
@@ -30,8 +34,7 @@ var AppChat = (function () {
     AppChat = __decorate([
         core_1.Component({
             selector: "app-chat",
-            template: "\n    <input #messageInput type=\"text\" [(ngModel)]=\"newMessage\"><br>\n    <button type=\"button\" (click)=\"addNewMessage(messageInput.value)\">Send new message</button>\n    <ul>\n      <li *ngFor=\"let message of messages\">{{message}}</li>\n    </ul>\n  ",
-            providers: [user_service_1.AppUser]
+            template: "\n    <input #messageInput type=\"text\" [(ngModel)]=\"newMessage\"><br>\n    <button type=\"button\" (click)=\"addNewMessage(messageInput.value)\">Send new message</button>\n    <ul>\n      <li *ngFor=\"let message of messages\">{{message}}</li>\n    </ul>\n    <button\n      type=\"button\"\n      (click)=\"logout()\">\n      Logout\n    </button>\n  "
         }), 
         __metadata('design:paramtypes', [user_service_1.AppUser, router_1.Router])
     ], AppChat);

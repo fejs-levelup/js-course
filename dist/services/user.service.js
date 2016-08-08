@@ -23,8 +23,14 @@ var AppUser = (function () {
     AppUser.prototype.login = function (name) {
         this.user.name = name;
         this.user.isLogin = true;
+        console.log(this.user);
+    };
+    AppUser.prototype.logout = function () {
+        this.user.name = "";
+        this.user.isLogin = false;
     };
     AppUser.prototype.getUser = function () {
+        console.log(this.user);
         return this.user;
     };
     AppUser = __decorate([

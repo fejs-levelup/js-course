@@ -10,8 +10,12 @@ import { Router } from "@angular/router";
     <ul>
       <li *ngFor="let message of messages">{{message}}</li>
     </ul>
-  `,
-  providers: [AppUser]
+    <button
+      type="button"
+      (click)="logout()">
+      Logout
+    </button>
+  `
 })
 export class AppChat {
   newMessage: string = "";
@@ -22,9 +26,14 @@ export class AppChat {
     private route: Router) {}
 
   ngOnInit() {
-    if(!this.appUser.getUser().isLogin) {
+    if(this.appUser.getUser().isLogin === false) {
       this.route.navigate(["/login"]);
     }
+  }
+
+  logout() {
+    this.appUser.logout();
+    this.route.navigate(["/login"]);
   }
 
   addNewMessage(message: string)  {
