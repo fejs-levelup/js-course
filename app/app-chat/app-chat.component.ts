@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { AppUser } from "../services/user.service";
 import { Router } from "@angular/router";
+import { Socket } from "../services/socket.service";
 
 @Component({
   selector: "app-chat",
@@ -15,7 +16,8 @@ import { Router } from "@angular/router";
       (click)="logout()">
       Logout
     </button>
-  `
+  `,
+  providers: [ Socket ]
 })
 export class AppChat {
   newMessage: string = "";
@@ -23,12 +25,16 @@ export class AppChat {
 
   constructor(
     private appUser: AppUser,
-    private route: Router) {}
+    private route: Router,
+    private socket: Socket) {}
 
   ngOnInit() {
     if(this.appUser.getUser().isLogin === false) {
       this.route.navigate(["/login"]);
+      return;
     }
+
+    this.socket.connectSocket();
   }
 
   logout() {

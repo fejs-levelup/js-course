@@ -11,17 +11,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var user_service_1 = require("../services/user.service");
 var router_1 = require("@angular/router");
+var socket_service_1 = require("../services/socket.service");
 var AppChat = (function () {
-    function AppChat(appUser, route) {
+    function AppChat(appUser, route, socket) {
         this.appUser = appUser;
         this.route = route;
+        this.socket = socket;
         this.newMessage = "";
         this.messages = ["hello", "you"];
     }
     AppChat.prototype.ngOnInit = function () {
         if (this.appUser.getUser().isLogin === false) {
             this.route.navigate(["/login"]);
+            return;
         }
+        this.socket.connectSocket();
     };
     AppChat.prototype.logout = function () {
         this.appUser.logout();
@@ -34,9 +38,10 @@ var AppChat = (function () {
     AppChat = __decorate([
         core_1.Component({
             selector: "app-chat",
-            template: "\n    <input #messageInput type=\"text\" [(ngModel)]=\"newMessage\"><br>\n    <button type=\"button\" (click)=\"addNewMessage(messageInput.value)\">Send new message</button>\n    <ul>\n      <li *ngFor=\"let message of messages\">{{message}}</li>\n    </ul>\n    <button\n      type=\"button\"\n      (click)=\"logout()\">\n      Logout\n    </button>\n  "
+            template: "\n    <input #messageInput type=\"text\" [(ngModel)]=\"newMessage\"><br>\n    <button type=\"button\" (click)=\"addNewMessage(messageInput.value)\">Send new message</button>\n    <ul>\n      <li *ngFor=\"let message of messages\">{{message}}</li>\n    </ul>\n    <button\n      type=\"button\"\n      (click)=\"logout()\">\n      Logout\n    </button>\n  ",
+            providers: [socket_service_1.Socket]
         }), 
-        __metadata('design:paramtypes', [user_service_1.AppUser, router_1.Router])
+        __metadata('design:paramtypes', [user_service_1.AppUser, router_1.Router, socket_service_1.Socket])
     ], AppChat);
     return AppChat;
 }());
