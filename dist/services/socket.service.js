@@ -10,15 +10,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var io = require("socket.io-client");
+var Observable_1 = require("rxjs/Observable");
 var Socket = (function () {
     function Socket() {
         this.link = "178.62.203.188:8888";
     }
     Socket.prototype.connectSocket = function () {
+        var _this = this;
         this.socket = io.connect(this.link);
         this.socket.on("connect", function () {
             console.log("Connected to socket");
         });
+        return Observable_1.Observable.create(function (observer) {
+            _this.socket.on("chat message", function (message) { return observer.next(message); });
+            return function () {
+                _this.socket.close();
+            };
+        });
+    };
+    Socket.prototype.sendMessage = function (message) {
+        this.socket.emit("chat message", message);
     };
     Socket = __decorate([
         core_1.Injectable(), 
