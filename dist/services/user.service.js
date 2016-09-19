@@ -23,14 +23,22 @@ var AppUser = (function () {
     AppUser.prototype.login = function (name) {
         this.user.name = name;
         this.user.isLogin = true;
+        localStorage.setItem("user", JSON.stringify({
+            name: name
+        }));
         console.log(this.user);
     };
     AppUser.prototype.logout = function () {
         this.user.name = "";
         this.user.isLogin = false;
+        localStorage.removeItem("user");
     };
     AppUser.prototype.getUser = function () {
-        console.log(this.user);
+        var user = JSON.parse(localStorage.getItem("user"));
+        if (!user)
+            return this.user;
+        this.user.name = user.name;
+        this.user.isLogin = true;
         return this.user;
     };
     AppUser = __decorate([

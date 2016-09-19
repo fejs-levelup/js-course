@@ -12,16 +12,28 @@ export class AppUser {
   login(name) {
     this.user.name = name;
     this.user.isLogin = true;
+
+    localStorage.setItem("user", JSON.stringify({
+      name
+    }));
     console.log(this.user);
   }
 
   logout() {
     this.user.name = "";
     this.user.isLogin = false;
+
+    localStorage.removeItem("user");
   }
 
   getUser() {
-    console.log(this.user);
+    let user = JSON.parse(localStorage.getItem("user"));
+
+    if(!user) return this.user;
+
+    this.user.name = user.name;
+    this.user.isLogin = true;
+
     return this.user;
   }
 }

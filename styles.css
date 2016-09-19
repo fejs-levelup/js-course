@@ -1,0 +1,16 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, chat-app {
+  height: 100%;
+}
+
+chat-app {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}

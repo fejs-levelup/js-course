@@ -13,6 +13,7 @@ var user_service_1 = require("../services/user.service");
 var router_1 = require("@angular/router");
 var socket_service_1 = require("../services/socket.service");
 var giphy_service_1 = require("../services/giphy.service");
+var chat_message_component_1 = require("../chat-message/chat-message.component");
 var Message = (function () {
     function Message(name, message, type) {
     }
@@ -69,8 +70,10 @@ var AppChat = (function () {
     AppChat = __decorate([
         core_1.Component({
             selector: "app-chat",
-            template: "\n    <input #messageInput type=\"text\" [(ngModel)]=\"newMessage\"><br>\n    <button type=\"button\" (click)=\"addNewMessage(messageInput.value)\">Send new message</button>\n    <div class=\"gifs-container\">\n      <img\n        *ngFor=\"let image of images\"\n        [src]=\"image.url\"\n        (click)=\"sendImage(image.id)\">\n    </div>\n    <ul>\n      <li *ngFor=\"let message of messages\">{{message.message}}</li>\n    </ul>\n    <button\n      type=\"button\"\n      (click)=\"logout()\">\n      Logout\n    </button>\n  ",
-            providers: [socket_service_1.Socket, giphy_service_1.Giphy]
+            template: "\n    <button\n      class=\"logout-btn\"\n      type=\"button\"\n      (click)=\"logout()\">\n      Logout\n    </button>\n\n    <div class=\"chat-input-wrapper\">\n      <input #messageInput type=\"text\" [(ngModel)]=\"newMessage\">\n      <button type=\"button\" (click)=\"addNewMessage(messageInput.value)\">Send</button>\n    </div>\n\n    <div class=\"gifs-container\">\n      <img\n        *ngFor=\"let image of images\"\n        [src]=\"image.url\"\n        (click)=\"sendImage(image.id)\">\n    </div>\n\n    <chat-message\n      *ngFor=\"let message of messages\"\n      [message]=\"message\"\n    ></chat-message>\n  ",
+            styles: ["\n    :host {\n      height: 90%;\n      overflow-y: scroll;\n    }\n\n    .logout-btn {\n      width: 70px;\n      height: 30px;\n      color: #fff;\n      border: none;\n      padding: 0;\n      margin: 0 0 10px 10px;\n      background: #ff5722;\n      text-transform: uppercase;\n    }\n\n    .chat-input-wrapper {\n      margin: 0 10px 10px;\n      display: flex;\n      justify-content: flex-start;\n    }\n\n    .chat-input-wrapper input {\n      height: 30px;\n      width: 400px;\n      border: 1px solid #2196f3;\n      padding: 0 10px;\n    }\n\n    .chat-input-wrapper button {\n      height: 30px;\n      width: 70px;\n      border: none;\n      color: #fff;\n      background: #2196f3;\n      font: 16px Arial, sans-serif;\n    }\n\n    .gifs-container {\n      height: 120px;\n      margin: 0 10px;\n      display: flex;\n      align-items: center;\n      overflow-x: scroll;\n    }\n\n    .gifs-container img {\n      margin: 0 0 0 5px;\n    }\n\n    .gifs-container img:first-child {\n      margin: 0;\n    }\n  "],
+            providers: [socket_service_1.Socket, giphy_service_1.Giphy],
+            directives: [chat_message_component_1.ChatMessage]
         }), 
         __metadata('design:paramtypes', [user_service_1.AppUser, router_1.Router, socket_service_1.Socket, giphy_service_1.Giphy])
     ], AppChat);

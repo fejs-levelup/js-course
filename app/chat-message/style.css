@@ -1,0 +1,13 @@
+:host {
+  display: flex;
+  width: 100%;
+  margin: 0 10px 10px;
+  justify-content: flex-start;
+  font: 16px arial, sans-serif;
+}
+
+.user-name {
+  margin: 0 10px 0 0;
+  color: #009688;
+  width: 80px;
+}

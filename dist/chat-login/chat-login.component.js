@@ -23,7 +23,9 @@ var ChatLogin = (function () {
     ChatLogin = __decorate([
         core_1.Component({
             selector: "chat-login",
-            template: "\n    <div class=\"login-wrapper\">\n      <input\n        #loginNameInput\n        type=\"text\"\n        [(ngModel)]=\"loginName\">\n        <br>\n\n      <button\n        type=\"button\"\n        (click)=\"login(loginNameInput.value)\">\n        Login\n       </button>\n    </div>\n  "
+            template: "\n    <div class=\"login-wrapper\">\n      <input\n        #loginNameInput\n        type=\"text\"\n        [(ngModel)]=\"loginName\">\n\n      <button\n        type=\"button\"\n        (click)=\"login(loginNameInput.value)\">\n        Login\n       </button>\n    </div>\n  ",
+            styles: ["\n    .login-wrapper {\n      height: 90px;\n      display: flex;\n      flex-direction: column;\n      align-items: center;\n      justify-content: space-between;\n    }\n\n    input, button {\n      width: 200px;\n      height: 40px;\n      font: 16px/30px Arial, sans-serif;\n    }\n\n    input {\n      border: 1px solid #777;\n      padding: 0 10px;\n    }\n\n    button {\n\n      border: none;\n      background: #2196f3;\n      padding: 0;\n      color: #fff;\n      box-shadow: 5px 5px 20px 1px rgba(0,0,0,.4);\n      cursor: pointer;\n    }\n\n    button:hover,\n    button:active {\n      box-shadow: 3px 3px 15px 1px rgba(0,0,0,.3);\n    }\n  "],
+            encapsulation: core_1.ViewEncapsulation.Native
         }), 
         __metadata('design:paramtypes', [user_service_1.AppUser, router_1.Router])
     ], ChatLogin);
