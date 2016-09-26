@@ -9,5 +9,13 @@
 .user-name {
   margin: 0 10px 0 0;
   color: #009688;
-  width: 80px;
+  width: 100px;
+}
+
+.user-name i {
+  color: red;
+}
+
+.user-name i:hover {
+  cursor: pointer;
 }

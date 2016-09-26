@@ -34,10 +34,12 @@ class Message {
         (click)="sendImage(image.id)">
     </div>
 
-    <chat-message
-      *ngFor="let message of messages"
-      [message]="message"
-    ></chat-message>
+    <div class="chat-messages">
+      <chat-message
+        *ngFor="let message of messages"
+        [message]="message"
+      ></chat-message>
+    </div>
   `,
   styles: [`
     :host {
@@ -92,6 +94,11 @@ class Message {
 
     .gifs-container img:first-child {
       margin: 0;
+    }
+
+    .chat-messages {
+      height: 380px;
+      overflow-y: scroll;
     }
   `],
   providers: [ Socket, Giphy ],

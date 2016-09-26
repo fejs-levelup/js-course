@@ -10,9 +10,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var giphy_service_1 = require("../services/giphy.service");
+var blocked_users_service_1 = require("../services/blocked-users.service");
 var ChatMessage = (function () {
-    function ChatMessage(giphy) {
+    function ChatMessage(giphy, blockedUsers) {
         this.giphy = giphy;
+        this.blockedUsers = blockedUsers;
     }
     ChatMessage.prototype.ngOnInit = function () {
         var _this = this;
@@ -21,7 +23,13 @@ var ChatMessage = (function () {
                 _this.src = image.url;
             });
         }
-        this.time = (new Date()).toISOString();
+        setTimeout(function () {
+            console.log("Hey from message");
+        }, 10000);
+        this.time = new Date();
+    };
+    ChatMessage.prototype.blockUser = function (name) {
+        console.log(this.blockedUsers.isBlocked(name));
     };
     __decorate([
         core_1.Input(), 
@@ -30,11 +38,11 @@ var ChatMessage = (function () {
     ChatMessage = __decorate([
         core_1.Component({
             selector: "chat-message",
-            template: "\n    <div class=\"user-name\">\n      {{message.name}}<br>\n      <span>{{time}}</span>\n    </div>\n\n    <div\n      *ngIf=\"message.type === 'TEXT'\"\n      class=\"text-message\">\n     {{message.message}}\n    </div>\n\n    <div\n      *ngIf=\"message.type === 'IMAGE'\"\n      class=\"image=message\">\n      <img *ngIf=\"src\" [src]=\"src\"/>\n    </div>\n  ",
+            template: "\n    <div class=\"user-name\">\n      {{message.name}}<br>\n      <span>{{time | date:\"yyyy/MM/dd HH:mm:ss\"}}</span><br>\n      <i (click)=\"blockUser(message.name)\">\u00D7</i>\n    </div>\n\n    <div\n      *ngIf=\"message.type === 'TEXT'\"\n      class=\"text-message\">\n     {{message.message}}\n    </div>\n\n    <div\n      *ngIf=\"message.type === 'IMAGE'\"\n      class=\"image=message\">\n      <img *ngIf=\"src\" [src]=\"src\"/>\n    </div>\n  ",
             styleUrls: ["app/chat-message/style.css"],
-            providers: [giphy_service_1.Giphy]
+            providers: [giphy_service_1.Giphy, blocked_users_service_1.BlockedUsers]
         }), 
-        __metadata('design:paramtypes', [giphy_service_1.Giphy])
+        __metadata('design:paramtypes', [giphy_service_1.Giphy, blocked_users_service_1.BlockedUsers])
     ], ChatMessage);
     return ChatMessage;
 }());

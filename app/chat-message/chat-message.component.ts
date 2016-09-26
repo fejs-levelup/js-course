@@ -1,12 +1,14 @@
 import { Component, Input } from "@angular/core";
 import { Giphy } from "../services/giphy.service";
+import { BlockedUsers } from "../services/blocked-users.service";
 
 @Component({
   selector: "chat-message",
   template: `
     <div class="user-name">
       {{message.name}}<br>
-      <span>{{time}}</span>
+      <span>{{time | date:"yyyy/MM/dd HH:mm:ss"}}</span><br>
+      <i (click)="blockUser(message.name)">×</i>
     </div>
 
     <div
@@ -22,7 +24,7 @@ import { Giphy } from "../services/giphy.service";
     </div>
   `,
   styleUrls: [ "app/chat-message/style.css" ],
-  providers: [ Giphy ]
+  providers: [ Giphy, BlockedUsers ]
 })
 export class ChatMessage {
   @Input()
@@ -32,7 +34,8 @@ export class ChatMessage {
   private time: Date;
 
   constructor(
-    private giphy: Giphy) {}
+    private giphy: Giphy,
+    private blockedUsers: BlockedUsers) {}
 
   ngOnInit() {
     if(this.message.type === 'IMAGE') {
@@ -41,6 +44,14 @@ export class ChatMessage {
       });
     }
 
-    this.time = (new Date()).toISOString();
+    setTimeout(() => {
+      console.log("Hey from message");
+    }, 10000);
+
+    this.time = new Date();
+  }
+
+  blockUser(name) {
+    console.log(this.blockedUsers.isBlocked(name));
   }
 }
